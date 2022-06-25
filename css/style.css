@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 96vh;
+}
+
+#game > * {
+    align-self: center;
+}
+
+#table-grid {
+    display: table;
+}
+
+.row {
+    display: table-row
+}
+
+.cell {
+    display: table-cell;
+    border: 0.5px solid black;
+    vertical-align: middle;
+    
+}
+
+#game > #game-buttons > button {
+    padding: 5px;
+    margin-top: 5px;
+}
+
