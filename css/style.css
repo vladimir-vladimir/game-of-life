@@ -1,17 +1,20 @@
 * {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+}
+
+input {
+    text-align: center;
 }
 
 #game {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100vw;
-    height: 96vh;
-}
-
-#game > * {
-    align-self: center;
+    height: 100vh;
 }
 
 #table-grid {
@@ -26,11 +29,10 @@
     display: table-cell;
     border: 0.5px solid black;
     vertical-align: middle;
-    
+    box-sizing: border-box;
 }
 
-#game > #game-buttons > button {
+#game button, td {
     padding: 5px;
-    margin-top: 5px;
 }
 

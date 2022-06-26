@@ -8,8 +8,25 @@
 
 <body>
   <div id="game">
-    <div id="game-table-grid"></div>
-    <div id="game-buttons"></div>
+    <h1>Game of Life</h1>
+    <table>
+      <tr>
+        <td>Number of rows (min: 3):</td>
+        <td><input type="number" id="num-row" min="3" value="9"></td>
+      </tr>
+      <tr>
+        <td>Number of columns (min: 3):</td>
+        <td><input type="number" id="num-col" min="3" value="16"></td>
+      </tr>
+      <tr>
+        <td>Time per step (min: 20ms):</td>
+        <td><input type="number" id="time-between-steps" min="20" value="200"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button id="start-game-button">Start Game</button></td>
+      </tr>
+    </table>
   </div>
   <script src="js/script.js"></script>
 </body>

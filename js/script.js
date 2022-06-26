@@ -1,59 +1,82 @@
-const NUM_ROW = 100; //134;
-const NUM_COL = 150; //252;
-const tableGridBinary = Array(NUM_ROW).fill().map(()=>Array(NUM_COL).fill());
+let NUM_ROW;
+let NUM_COL;
+let timeBetweenSteps;
+
+let tableGridBinary;
 let startPressed = false;
-let timeBetweenSteps = 200;
 let gameStartTimer;
 
-document.querySelector
-// Buttons
-startButton = document.createElement("button");
-startButton.innerText = "Start";
-startButton.addEventListener("click", () => {
-    if (startPressed == true) {
-        return;
-    }
-    startPressed = true;
-    runGame();
+let startGameButton = document.querySelector("#start-game-button");
+startGameButton.addEventListener("click", () => {
+    NUM_ROW = parseInt(document.querySelector("#num-row").value)+4;
+    NUM_COL = parseInt(document.querySelector("#num-col").value)+4;
+    timeBetweenSteps = parseInt(document.querySelector("#time-between-steps").value);
+    drawTableGrid();
 });
-document.querySelector("#game-buttons").append(startButton);
 
-stopButton = document.createElement("button");
-stopButton.innerText = "Stop";
-stopButton.addEventListener("click", stopGame);
-document.querySelector("#game-buttons").append(stopButton);
+function drawTableGrid() {
+    document.querySelector("#game").innerHTML = "";
+    const gameTableGrid = document.createElement("div");
+    gameTableGrid.setAttribute("id", "game-table-grid")
+    document.querySelector("#game").appendChild(gameTableGrid);
+    const gameButtons = document.createElement("div");
+    gameButtons.setAttribute("id", "game-buttons");
+    document.querySelector("#game").appendChild(gameButtons);
 
-resetButton = document.createElement("button");
-resetButton.innerText = "Reset";
-resetButton.addEventListener("click", resetGame);
-document.querySelector("#game-buttons").append(resetButton);
-
-// Table Grid
-let height = width = Math.min((document.querySelector("#game").offsetHeight -
-    document.querySelector("#game-buttons").offsetHeight)*1.0/NUM_ROW,
-    document.querySelector("#game").offsetWidth*1.0/NUM_COL);
-const tableGrid = document.querySelector("#game-table-grid");
-tableGrid.style.height = height * NUM_ROW + "px";
-tableGrid.style.width = width * NUM_COL + "px";
-for (let i=0; i<NUM_ROW; i++) {
-    const tableRow = document.createElement("div");
-    tableRow.id = `${i}`;
-    tableGrid.append(tableRow);
-    for (let j=0; j<NUM_COL; j++) {
-        const tableItem = document.createElement("div");
-        tableItem.style.height = height - 1 + "px";
-        tableItem.style.width = width - 1 + "px";
-        tableItem.classList.add("cell");
-        tableItem.id = `${i} ${j}`;
-        tableItem.addEventListener("click", tableItemClick);
-        if (i<=1 || j<=1 || i>=NUM_ROW-2 || j>=NUM_COL-2) {
-            tableItem.style.visibility = "hidden";
+    // Buttons
+    const startButton = document.createElement("button");
+    startButton.innerText = "Start";
+    startButton.addEventListener("click", () => {
+        if (startPressed == true) {
+            return;
         }
-        tableRow.append(tableItem);
+        startPressed = true;
+        runGame();
+    });
+    document.querySelector("#game-buttons").append(startButton);
+
+    const stopButton = document.createElement("button");
+    stopButton.innerText = "Stop";
+    stopButton.addEventListener("click", stopGame);
+    document.querySelector("#game-buttons").append(stopButton);
+
+    const resetButton = document.createElement("button");
+    resetButton.innerText = "Reset";
+    resetButton.addEventListener("click", resetGame);
+    document.querySelector("#game-buttons").append(resetButton);
+
+    const refreshButton = document.createElement("button");
+    refreshButton.innerText = "Main Menu";
+    refreshButton.addEventListener("click", () => {document.location.reload();});
+    document.querySelector("#game-buttons").append(refreshButton);
+
+    // Table Grid
+    tableGridBinary = Array(NUM_ROW).fill().map(()=>Array(NUM_COL).fill());
+    let height = width = Math.min((document.querySelector("#game").offsetHeight -
+        document.querySelector("#game-buttons").offsetHeight)*1.0/(NUM_ROW-4),
+        document.querySelector("#game").offsetWidth*1.0/(NUM_COL-4));
+    const tableGrid = document.querySelector("#game-table-grid");
+    tableGrid.style.height = height * (NUM_ROW-4) + "px";
+    tableGrid.style.width = width * (NUM_COL-4) + "px";
+    for (let i=0; i<NUM_ROW; i++) {
+        const tableRow = document.createElement("div");
+        tableRow.id = `${i}`;
+        tableGrid.append(tableRow);
+        for (let j=0; j<NUM_COL; j++) {
+            const tableItem = document.createElement("div");
+            tableItem.style.height = height + "px";
+            tableItem.style.width = width + "px";
+            tableItem.classList.add("cell");
+            tableItem.id = `${i} ${j}`;
+            tableItem.addEventListener("click", tableItemClick);
+            if (i<=1 || j<=1 || i>=NUM_ROW-2 || j>=NUM_COL-2) {
+                tableItem.style.display = "none";
+            }
+            tableRow.append(tableItem);
+        }
     }
 }
 
-// Functions
 function tableItemClick(el) {
     if (startPressed == true) {
         return;
