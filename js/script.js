@@ -1,3 +1,4 @@
+const OVERFLOW = 2;
 let NUM_ROW;
 let NUM_COL;
 let timeBetweenSteps;
@@ -8,8 +9,8 @@ let gameStartTimer;
 
 let startGameButton = document.querySelector("#start-game-button");
 startGameButton.addEventListener("click", () => {
-    NUM_ROW = parseInt(document.querySelector("#num-row").value)+4;
-    NUM_COL = parseInt(document.querySelector("#num-col").value)+4;
+    NUM_ROW = parseInt(document.querySelector("#num-row").value)+2*OVERFLOW;
+    NUM_COL = parseInt(document.querySelector("#num-col").value)+2*OVERFLOW;
     timeBetweenSteps = parseInt(document.querySelector("#time-between-steps").value);
     drawTableGrid();
 });
@@ -53,11 +54,11 @@ function drawTableGrid() {
     // Table Grid
     tableGridBinary = Array(NUM_ROW).fill().map(()=>Array(NUM_COL).fill());
     let height = width = Math.min((document.querySelector("#game").offsetHeight -
-        document.querySelector("#game-buttons").offsetHeight)*1.0/(NUM_ROW-4),
-        document.querySelector("#game").offsetWidth*1.0/(NUM_COL-4));
+        document.querySelector("#game-buttons").offsetHeight)*1.0/(NUM_ROW-2*OVERFLOW),
+        document.querySelector("#game").offsetWidth*1.0/(NUM_COL-2*OVERFLOW));
     const tableGrid = document.querySelector("#game-table-grid");
-    tableGrid.style.height = height * (NUM_ROW-4) + "px";
-    tableGrid.style.width = width * (NUM_COL-4) + "px";
+    tableGrid.style.height = height * (NUM_ROW-2*OVERFLOW) + "px";
+    tableGrid.style.width = width * (NUM_COL-2*OVERFLOW) + "px";
     for (let i=0; i<NUM_ROW; i++) {
         const tableRow = document.createElement("div");
         tableRow.id = `${i}`;
@@ -69,7 +70,7 @@ function drawTableGrid() {
             tableItem.classList.add("cell");
             tableItem.id = `${i} ${j}`;
             tableItem.addEventListener("click", tableItemClick);
-            if (i<=1 || j<=1 || i>=NUM_ROW-2 || j>=NUM_COL-2) {
+            if (i<OVERFLOW || j<OVERFLOW || i>=NUM_ROW-OVERFLOW || j>=NUM_COL-OVERFLOW) {
                 tableItem.style.display = "none";
             }
             tableRow.append(tableItem);
