@@ -16,13 +16,14 @@ startGameButton.addEventListener("click", () => {
 });
 
 function drawTableGrid() {
-    document.querySelector("#game").innerHTML = "";
+    const gameOfLife = document.querySelector("#game");
+    gameOfLife.innerHTML = "";
     const gameTableGrid = document.createElement("div");
     gameTableGrid.setAttribute("id", "game-table-grid")
-    document.querySelector("#game").appendChild(gameTableGrid);
+    gameOfLife.appendChild(gameTableGrid);
     const gameButtons = document.createElement("div");
     gameButtons.setAttribute("id", "game-buttons");
-    document.querySelector("#game").appendChild(gameButtons);
+    gameOfLife.appendChild(gameButtons);
 
     // Buttons
     const startButton = document.createElement("button");
@@ -46,16 +47,19 @@ function drawTableGrid() {
     resetButton.addEventListener("click", resetGame);
     document.querySelector("#game-buttons").append(resetButton);
 
-    const refreshButton = document.createElement("button");
-    refreshButton.innerText = "Main Menu";
-    refreshButton.addEventListener("click", () => {document.location.reload();});
-    document.querySelector("#game-buttons").append(refreshButton);
-
     // Table Grid
     tableGridBinary = Array(NUM_ROW).fill().map(()=>Array(NUM_COL).fill());
-    let height = width = Math.min((document.querySelector("#game").offsetHeight -
+
+    let styleGameOfLife = getComputedStyle(gameOfLife);
+    let paddingX = parseFloat(styleGameOfLife.paddingLeft) + parseFloat(styleGameOfLife.paddingRight);
+    let paddingY = parseFloat(styleGameOfLife.paddingTop) + parseFloat(styleGameOfLife.paddingBottom);
+
+    let marginX = parseFloat(styleGameOfLife.marginLeft) + parseFloat(styleGameOfLife.marginRight);
+    let marginY = parseFloat(styleGameOfLife.marginTop) + parseFloat(styleGameOfLife.marginBottom);
+
+    let height = width = Math.min((parseFloat(gameOfLife.offsetHeight) - paddingY - marginY -
         document.querySelector("#game-buttons").offsetHeight)*1.0/(NUM_ROW-2*OVERFLOW),
-        document.querySelector("#game").offsetWidth*1.0/(NUM_COL-2*OVERFLOW));
+        (parseFloat(gameOfLife.offsetWidth) - paddingX - marginX)*1.0/(NUM_COL-2*OVERFLOW));
     const tableGrid = document.querySelector("#game-table-grid");
     tableGrid.style.height = height * (NUM_ROW-2*OVERFLOW) + "px";
     tableGrid.style.width = width * (NUM_COL-2*OVERFLOW) + "px";
@@ -69,7 +73,7 @@ function drawTableGrid() {
             tableItem.style.width = width + "px";
             tableItem.classList.add("cell");
             tableItem.id = `${i} ${j}`;
-            tableItem.addEventListener("click", tableItemClick);
+            tableItem.addEventListener("click", () => {tableItemClick(tableItem)});
             if (i<OVERFLOW || j<OVERFLOW || i>=NUM_ROW-OVERFLOW || j>=NUM_COL-OVERFLOW) {
                 tableItem.style.display = "none";
             }
@@ -78,21 +82,17 @@ function drawTableGrid() {
     }
 }
 
-function tableItemClick(el) {
+function tableItemClick(element) {
     if (startPressed == true) {
         return;
     }
-    if (el.target.style.backgroundColor == "black") {
-        el.target.style.backgroundColor = "white";
-    } else {
-        el.target.style.backgroundColor = "black";
-    }
+    element.classList.toggle("alive");
 }
 
 function tableGridToArray() {
     for (let i=0; i<NUM_ROW; i++) {
         for (let j=0; j<NUM_COL; j++) {
-            if (document.getElementById(`${i} ${j}`).style.backgroundColor == "black") {
+            if (document.getElementById(`${i} ${j}`).classList.contains("alive")) {
                 tableGridBinary[i][j] = 1;
             } else {
                 tableGridBinary[i][j] = 0;
@@ -135,10 +135,10 @@ function arrayToTableGrid() {
         for (let j=0; j<NUM_COL; j++) {
             if (tableGridBinary[i][j] == 1 &&
                 (numberOfLiveNeighbours(i, j)<2 || numberOfLiveNeighbours(i, j)>3)) {
-                document.getElementById(`${i} ${j}`).style.backgroundColor = "white";
+                document.getElementById(`${i} ${j}`).classList.remove("alive");
             } else if (tableGridBinary[i][j] == 0 &&
                 numberOfLiveNeighbours(i, j)==3) {
-                document.getElementById(`${i} ${j}`).style.backgroundColor = "black";
+                document.getElementById(`${i} ${j}`).classList.add("alive");
             }
         }
     }
@@ -159,7 +159,7 @@ function resetGame() {
     stopGame();
     for (let i=0; i<NUM_ROW; i++) {
         for (let j=0; j<NUM_COL; j++) {
-            document.getElementById(`${i} ${j}`).style.backgroundColor = "white";
+            document.getElementById(`${i} ${j}`).classList.remove("alive");
         }
     }
 }

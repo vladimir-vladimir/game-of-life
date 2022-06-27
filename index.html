@@ -8,25 +8,25 @@
 
 <body>
   <div id="game">
-    <h1>Game of Life</h1>
-    <div style="width: 50%;">
+    <h1 style="margin: 0;">Game of Life</h1>
+    <div style="width: 50%; border: 1px solid black; padding: 5px;">
       <p><b>Introduction:&nbsp;</b>Game of Life is a is a cellular automaton played on a 2D grid. The rules of the game are as follows:</p>
-      <ol>
+      <ul>
         <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
         <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
         <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
         <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
-      </ol>
-      <p>The initial configuration of the board is set by the player. Afterward, at each cycle, the aforementioned rules are applied to the entire 2D grid.</p>
+      </ul>
+      <p>The initial configuration of the board is set by the player. Afterward, at each cycle, the aforementioned rules are applied to the entire 2D grid simultaneously.</p>
     </div>
     <table>
       <tr>
         <td>Number of rows (min: 3):</td>
-        <td><input type="number" id="num-row" min="3" value="9"></td>
+        <td><input type="number" id="num-row" min="3" value="50"></td>
       </tr>
       <tr>
         <td>Number of columns (min: 3):</td>
-        <td><input type="number" id="num-col" min="3" value="16"></td>
+        <td><input type="number" id="num-col" min="3" value="90"></td>
       </tr>
       <tr>
         <td>Time per cycle (min: 20ms):</td>

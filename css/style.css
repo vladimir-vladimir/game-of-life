@@ -1,7 +1,17 @@
-body {
+* {
+    font-family: "Courier New";
+}
+
+html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(90deg, #fff, #ccc);
 }
 
 input {
@@ -9,12 +19,13 @@ input {
 }
 
 #game {
+    margin: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 }
 
 #table-grid {
@@ -22,17 +33,27 @@ input {
 }
 
 .row {
-    display: table-row
+    display: table-row;
 }
 
 .cell {
     display: table-cell;
     border: 0.5px solid black;
+    border-radius: 25%;
     vertical-align: middle;
     box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+.alive {
+    background-color: black;
+}
+
+.cell:not(.alive):hover {
+    background-color: gray;
 }
 
 #game button, td {
     padding: 5px;
+    margin: 5px;
 }
-
