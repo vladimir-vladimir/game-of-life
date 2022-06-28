@@ -17,20 +17,20 @@
         <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
         <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
       </ul>
-      <p>The initial configuration of the board is set by the player. Afterward, at each cycle, the aforementioned rules are applied to the entire 2D grid simultaneously.</p>
+      <p>The initial configuration of the board is set by the player. Afterward, at each cycle, the aforementioned rules are applied simultaneously to the entire 2D grid.</p>
     </div>
     <table>
       <tr>
         <td>Number of rows (min: 3):</td>
-        <td><input type="number" id="num-row" min="3" value="50"></td>
+        <td><input type="number" id="num-row" min="3" value="30"></td>
       </tr>
       <tr>
         <td>Number of columns (min: 3):</td>
-        <td><input type="number" id="num-col" min="3" value="90"></td>
+        <td><input type="number" id="num-col" min="3" value="60"></td>
       </tr>
       <tr>
         <td>Time per cycle (min: 20ms):</td>
-        <td><input type="number" id="time-between-steps" min="20" value="200"></td>
+        <td><input type="number" id="time-between-steps" min="20" value="500"></td>
       </tr>
       <tr>
         <td></td>

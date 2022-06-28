@@ -11,7 +11,7 @@ html, body {
 body {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(90deg, #fff, #ccc);
+    background: linear-gradient(#eee, #bbb);
 }
 
 input {
@@ -19,7 +19,6 @@ input {
 }
 
 #game {
-    margin: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,7 +41,8 @@ input {
     border-radius: 25%;
     vertical-align: middle;
     box-sizing: border-box;
-    transition: background-color 0.2s;
+    transition: background-color 0.25s;
+    background-color: white;
 }
 
 .alive {
@@ -55,5 +55,4 @@ input {
 
 #game button, td {
     padding: 5px;
-    margin: 5px;
 }

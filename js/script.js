@@ -25,7 +25,6 @@ function drawTableGrid() {
     gameButtons.setAttribute("id", "game-buttons");
     gameOfLife.appendChild(gameButtons);
 
-    // Buttons
     const startButton = document.createElement("button");
     startButton.innerText = "Start";
     startButton.addEventListener("click", () => {
@@ -47,19 +46,16 @@ function drawTableGrid() {
     resetButton.addEventListener("click", resetGame);
     document.querySelector("#game-buttons").append(resetButton);
 
-    // Table Grid
     tableGridBinary = Array(NUM_ROW).fill().map(()=>Array(NUM_COL).fill());
 
     let styleGameOfLife = getComputedStyle(gameOfLife);
     let paddingX = parseFloat(styleGameOfLife.paddingLeft) + parseFloat(styleGameOfLife.paddingRight);
     let paddingY = parseFloat(styleGameOfLife.paddingTop) + parseFloat(styleGameOfLife.paddingBottom);
-
     let marginX = parseFloat(styleGameOfLife.marginLeft) + parseFloat(styleGameOfLife.marginRight);
     let marginY = parseFloat(styleGameOfLife.marginTop) + parseFloat(styleGameOfLife.marginBottom);
-
     let height = width = Math.min((parseFloat(gameOfLife.offsetHeight) - paddingY - marginY -
-        document.querySelector("#game-buttons").offsetHeight)*1.0/(NUM_ROW-2*OVERFLOW),
-        (parseFloat(gameOfLife.offsetWidth) - paddingX - marginX)*1.0/(NUM_COL-2*OVERFLOW));
+        parseFloat(document.querySelector("#game-buttons").offsetHeight))/(NUM_ROW-2*OVERFLOW),
+        (parseFloat(gameOfLife.offsetWidth) - paddingX - marginX)/(NUM_COL-2*OVERFLOW));
     const tableGrid = document.querySelector("#game-table-grid");
     tableGrid.style.height = height * (NUM_ROW-2*OVERFLOW) + "px";
     tableGrid.style.width = width * (NUM_COL-2*OVERFLOW) + "px";
